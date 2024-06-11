@@ -1,0 +1,2290 @@
+////////////
+000 JAVA NET BEANS PAGINA WEB SALLEPEC.COM OK OK OK
+///////////
+
+<?php
+session_start();
+$valor = filter_input(INPUT_POST, 'valorPHP', FILTER_VALIDATE_INT);
+if (!isset($_SESSION['contador'])) {
+    $_SESSION['contador'] = 1;
+}
+$valor0=$_SESSION['contador'];  
+echo "DolarValorUno=== $valor";
+if ($valor !== false) {
+    echo "DolarValorDos=== $valor";
+    $_SESSION['contador'] = max($_SESSION['contador'], $valor); // Mantener el máximo valor
+ $valor1=$_SESSION['contador'];  
+}
+if (isset($_SESSION['contador'])) {
+    echo "valoractual=== {$_SESSION['contador']}";
+    $valor=$_SESSION['contador']; 
+ $valor2=$_SESSION['contador'];  
+}
+echo "DolarValorTRES=== $valor";
+ $clickedImage = filter_input(INPUT_GET, 'imagenn_clicked', FILTER_SANITIZE_STRING);
+ echo "DolarValorCUATRO=== $valor";
+ $valor3=$clickedImage;  
+if ($clickedImage !== null && is_string($clickedImage) && $valor==1){
+      echo "RUTA ELIMINADA== $clickedImage";
+      $valor4="FIN FIN FIN ";
+      if (file_exists($clickedImage)) {unlink($clickedImage); }
+}
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            color: blue;
+        }
+        .panelsuperior {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(95px, 1fr));
+            grid-gap: 0px;            
+           
+            
+            width: 100%;
+            height: 100px;
+            overflow: auto;
+            color: red;
+            background-color: red;
+            justify-content: center;
+            justify-items: center; 
+            align-items: center;
+        }
+.panelcentral {
+ display: flex;
+ justify-content: center;
+ }
+ #tabla{
+ width: 100%;
+ border-collapse: collapse;
+ }
+ 
+ #tabla td{
+ text-align: center;
+ vertical-align: middle;
+ 
+ justify-content: center;
+ justify-items: center; 
+ align-items: center;
+ 
+ }
+ 
+ #tabla img{
+ display: inline-block;
+ max-width: 100%;
+ max-height:100%
+ }
+  #tabla{
+ border: 5px solid black;
+ 
+ }
+ 
+ 
+.botoncentral {
+ display: inline-block;
+ padding: 10px;
+ background-color: white;
+ border: yellow;
+ cursor: pointer;
+ margin: 5px;
+            
+ color: red;
+ text-align: left;
+ justify-content: center;
+ align-items: center;
+ width: 200px;
+ height: 75px;
+ }
+      
+
+        .panelinferior {
+            width: 100%;
+            height: 373px;
+            overflow: auto;
+            color: lightcoral;
+            background-color: coral;
+            justify-content: center;
+            
+            
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(95px, 1fr));
+            grid-gap: 2px;
+            justify-items: center;
+            align-items: center;
+        }
+        
+        
+        
+        
+        
+        
+        
+        #boton{
+        background-color: fuchsia;    
+        }        
+        #botonR{
+        background-color: aqua;    
+        }
+        
+        
+    </style> 
+    <title>Botones con Imágenes en Panel Scroll</title>
+</head>
+<body>
+   
+<div class="panelsuperior">  echo "ffffffDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDffimagenEliminar";
+ </div> 
+
+
+
+<div class="panelcentral"> 
+<table id="tabla">    
+<tr> 
+    
+    
+<td style="background-color: blue; width: 80px; height:81px">
+<a href="index.php">
+    <img class="imagen" src="PECSimagen/CASA.png" width="77" height="77" alt="Desc">
+    </a>
+</td> 
+
+
+<td style="background-color: blue; width: 160px; height:81px">
+<a href="dialogos.php">
+    <img class="imagen" src="PECSimagen/VOLVER A DIALOGAR.png" width="150" height="77" alt="Desc">
+</a>    
+</td> 
+
+
+<td style="background-color: blue; width: 160px; height:81px">
+   <a href="AgregarEn.php">
+   <img class="imagen" src="PECSimagen/VOLVER A PANEL MULTIMEDIA.png" width="150" height="77" alt="Descrip">
+   </a>
+</td>
+
+
+<td style="background-color: green;"> 
+<img src="PECSimagen/15ALIMENTOS.png" width="300" height="77"  
+     class="imagen" alt="Desc">
+
+</td> 
+
+
+<td style="background-color: green;">
+<img src="PECSimagen/BORRAR.png" alt="Image" id="imagenSCRIPT" width="77" height="77">
+</td>
+
+<form method="post" action="">
+        <input type="text" name="numeroPHP" id="numeroSCRIPT" readonly style="display: none;">
+        <input name="valorPHP" id="valorSCRIPT" value="">
+</form>
+
+<td style="background-color: green;">
+    <img id="imagen" src="PECSimagen/AGREGARimagen.png" alt="Imagen" onclick="seleccionarArchivo()">
+    <form id="formulario" action="agregarMultimediaAlimentos.php" method="post" enctype="multipart/form-data" style="display:none;">
+        <input type="file" name="archivo" id="archivo" onchange="subirArchivo()">
+    </form>
+</td>   
+<script>
+        function seleccionarArchivo() {
+            document.getElementById('archivo').click();
+        }
+
+        function subirArchivo() {
+            document.getElementById('formulario').submit();
+        }
+    </script>
+<?php
+if(isset($_FILES['archivo'])){
+    $archivo = $_FILES['archivo'];
+    $nombre = $archivo['name'];
+    $ruta = "ALIMENTOimagen/" . $nombre;
+    move_uploaded_file($archivo['tmp_name'], $ruta);
+    //echo "I";
+    //echo $ruta;
+} else {
+    //echo "";
+}
+?>
+<td style="background-color: green;">
+    <img id="imagen" src="PECSimagen/AGREGARaudio.png" alt="Imagen" onclick="seleccionarArchivoAudio()">
+    <form id="formularioAudio" action="agregarMultimediaAlimentos.php" method="post" enctype="multipart/form-data" style="display:none;">
+        <input type="file" name="archivoAudio" id="archivoAudio" onchange="subirArchivoAudio()">
+    </form>
+</td> 
+<script>
+        function seleccionarArchivoAudio() {
+            document.getElementById('archivoAudio').click();
+        }
+
+        function subirArchivoAudio() {
+            document.getElementById('formularioAudio').submit();
+        }
+</script>
+<?php
+if(isset($_FILES['archivoAudio'])){
+    $archivo = $_FILES['archivoAudio'];
+    $nombre = $archivo['name'];
+    $ruta = "ALIMENTOaudio/" . $nombre;
+    move_uploaded_file($archivo['tmp_name'], $ruta);
+    //echo "I";    //echo $ruta;   
+} else { //echo "";
+}
+?>
+</tr>
+</table>   
+</div><!-- ////////////INICIO MOSTRAR CARPETA 111 ALIMENTOSimagen EN PANEL INFERIOR-->
+<?php 
+//MATRICIAR A LA CARPETA ALIMENTO
+   $ALIMENTOimagen = scandir('ALIMENTOimagen');
+   $RutaALIMENTOimagen=array();
+   $MatrizALIMENTOimagen=array(); //echo $MatrizImagenes[$i];
+   $i=0;
+   foreach ($ALIMENTOimagen as $imagenALIMENTOimagen) {
+      if ($imagenALIMENTOimagen != '.' && $imagenALIMENTOimagen != '..') { //echo $imagen;
+         $MatrizALIMENTOimagen[$i]=$imagenALIMENTOimagen;
+      $RutaALIMENTOimagen[$i]='ALIMENTOimagen/'.$imagenALIMENTOimagen;
+         $RutaALIMENTOaudio[$i]='ALIMENTOaudio/'.$imagenALIMENTOimagen; //echo $RutaImagen[$i];
+         $contenido[$i]=file_get_contents($RutaALIMENTOimagen[$i]); //echo $contenido[$i];
+         $i++; //echo '<td><img src="ALIMENTOimagen/'.$imagen.' " alt="Imammmmgen"></td>';
+         }
+      }
+      $RutaALIMENTOimagenJSON=json_encode($RutaALIMENTOimagen);
+      $RutaALIMENTOaudioJSON=json_encode($RutaALIMENTOaudio);
+
+      //$RutaALIMENTOimagen[0]='PECSimagen/11FRUTAS.png';
+      //$RutaALIMENTOimagen[1]='PECSimagen/12EMOCIONES.png';
+      //$RutaALIMENTOimagen[2]='PECSimagen/13ESCUELA.png';
+?>
+<div class="panelinferior">
+<?php
+//CARGAR AL PANEL LAS IMAGENES DE LA MATRIZ CARPETA ALIMENTO
+foreach($RutaALIMENTOimagen as $ruta)
+{//echo '<img src="'.$ruta.'" width="77" height="77" alt="ima">';
+   echo '<a href="?imagenn_clicked='.$ruta.'"> <img src="'.$ruta.'" width="77" height="77" alt="ima"> </a>';
+} 
+ $valor1=$_SESSION['contador'];  
+echo "DolarValorCUATRO=== $valor0";
+?> 
+
+</div> 
+<!-- ////////////FIN MOSTRAR CARPETA 111 ALIMENTOSimagen EN PANEL INFERIOR-->
+
+    <script>
+        var contador = 0;
+        document.getElementById("numeroSCRIPT").value = contador;
+
+        document.getElementById("imagenSCRIPT").addEventListener("click", function() {
+            contador++;
+            document.getElementById("numeroSCRIPT").value = contador;
+            document.getElementById("valorSCRIPT").value = contador;
+            
+            // Enviar el formulario al servidor cuando el contador sea igual a 1
+            if (contador === 1) {
+                document.querySelector("form").submit();
+                
+            }
+        });
+    </script>  
+
+</body>
+</html>
+
+
+////////////
+111 CONTADOR OK
+////////////
+
+<img src="PECSimagen/11FRUTAS.png" alt="Image" id="imagenSCRIPT">
+  
+    <form method="post" action="">
+        <input type="text" name="numeroPHP" id="numeroSCRIPT" readonly>
+    </form>
+    
+    <script>
+        var contador = <?php echo isset($_SESSION['contador']) ? $_SESSION['contador'] : 0; ?>;
+        document.getElementById("numeroSCRIPT").value = contador;
+        
+        document.getElementById("imagenSCRIPT").addEventListener("click", function() {
+            contador++;
+            document.getElementById("numeroSCRIPT").value = contador;
+            document.getElementById("formularioMMMMo").submit();
+        });
+    </script> 
+    
+    <?php
+    session_start();
+    $valor = filter_input(INPUT_POST, 'numeroPHP', FILTER_VALIDATE_INT);
+    //echo "<p>Valor actualgfgfgfg: $valor</p>";
+    if ($valor == 2) {
+        $_SESSION['contador'] = $valor;
+        $file = 'ultimo_valor.txt';
+        file_put_contents($file, $valor);
+        echo "<p>Valor actual: $valor</p>";
+        echo "El valor actual es: $valor";
+    }
+    else {
+        // El valor recibido no es un número entero válido
+        echo "Error: el valor recibido no es válido";
+    }
+    ?>
+
+///////////////////////
+222 CONTADOR
+/////////////////////
+ 
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            color: blue;
+        }
+        .panelsuperior {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(95px, 1fr));
+            grid-gap: 0px;            
+           
+            
+            width: 100%;
+            height: 100px;
+            overflow: auto;
+            color: red;
+            background-color: red;
+            justify-content: center;
+            justify-items: center; 
+            align-items: center;
+        }
+.panelcentral {
+ display: flex;
+ justify-content: center;
+ }
+ #tabla{
+ width: 100%;
+ border-collapse: collapse;
+ }
+ 
+ #tabla td{
+ text-align: center;
+ vertical-align: middle;
+ 
+ justify-content: center;
+ justify-items: center; 
+ align-items: center;
+ 
+ }
+ 
+ #tabla img{
+ display: inline-block;
+ max-width: 100%;
+ max-height:100%
+ }
+  #tabla{
+ border: 5px solid black;
+ 
+ }
+ 
+ 
+.botoncentral {
+ display: inline-block;
+ padding: 10px;
+ background-color: white;
+ border: yellow;
+ cursor: pointer;
+ margin: 5px;
+            
+ color: red;
+ text-align: left;
+ justify-content: center;
+ align-items: center;
+ width: 200px;
+ height: 75px;
+ }
+      
+
+        .panelinferior {
+            width: 100%;
+            height: 373px;
+            overflow: auto;
+            color: lightcoral;
+            background-color: coral;
+            justify-content: center;
+            
+            
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(95px, 1fr));
+            grid-gap: 2px;
+            justify-items: center;
+            align-items: center;
+        }
+        
+        
+        
+        
+        
+        
+        
+        #boton{
+        background-color: fuchsia;    
+        }        
+        #botonR{
+        background-color: aqua;    
+        }
+        
+        
+    </style> 
+    <title>Botones con Imágenes en Panel Scroll</title>
+</head>
+<body>
+   
+<div class="panelsuperior">  echo "ffffffDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDffimagenEliminar";
+ </div> 
+
+
+
+<div class="panelcentral"> 
+<table id="tabla">    
+<tr> 
+    
+    
+<td style="background-color: blue; width: 80px; height:81px">
+<a href="index.php">
+    <img class="imagen" src="PECSimagen/CASA.png" width="77" height="77" alt="Desc">
+    </a>
+</td> 
+
+
+<td style="background-color: blue; width: 160px; height:81px">
+<a href="dialogos.php">
+    <img class="imagen" src="PECSimagen/VOLVER A DIALOGAR.png" width="150" height="77" alt="Desc">
+</a>    
+</td> 
+
+
+<td style="background-color: blue; width: 160px; height:81px">
+   <a href="AgregarEn.php">
+   <img class="imagen" src="PECSimagen/VOLVER A PANEL MULTIMEDIA.png" width="150" height="77" alt="Descrip">
+   </a>
+</td>
+
+
+<td style="background-color: green;"> 
+<img src="PECSimagen/15ALIMENTOS.png" width="300" height="77"  
+     class="imagen" alt="Desc">
+
+</td> 
+<?php 
+//MATRICIAR CARPETA PECSimagen Y ESCOGER BOTON BORRAR.png
+   $PECSimagen = scandir('PECSimagen');$RutaPECSimagen=array();$MatrizPECSimagen=array();$i=0;
+   foreach ($PECSimagen as $imagenPECSimagen) {
+      if ($imagenPECSimagen != '.' && $imagenPECSimagen != '..' && $imagenPECSimagen=="BORRAR.png" ) { //echo $imagen;
+         $MatrizPECSimagen[$i]=$imagenPECSimagen;
+         $RutaPECSimagen[$i]='PECSimagen/'.$imagenPECSimagen;
+         //$RutaPECSaudio[$i]='PECSaudio/'.$imagenPECSimagen; //echo $RutaImagen[$i];
+         $contenido[$i]=file_get_contents($RutaPECSimagen[$i]); //echo $contenido[$i];
+         $i++;
+         }
+      }
+  ?>
+
+<td style="background-color: green;">
+<?php
+//COLOCAR BOTON BORRAR EN PANEL MEDIO
+foreach($RutaPECSimagen as $ima)
+{ echo '<img src="'.$ima.'" alt="Mi imagen" onclick="console.log(\'hicisteeee\'); FuncionContador()">';
+ //echo '<a href="?image_clicked='.$ima.'"><img src="'.$ima.'" width="77" height="77" alt="i"></a>';
+}
+?>
+</td>
+
+
+<td style="background-color: green;">
+    <img id="imagen" src="PECSimagen/AGREGARimagen.png" alt="Imagen" onclick="seleccionarArchivo()">
+    <form id="formulario" action="agregarMultimediaAlimentos.php" method="post" enctype="multipart/form-data" style="display:none;">
+        <input type="file" name="archivo" id="archivo" onchange="subirArchivo()">
+    </form>
+</td>   
+<script>
+        function seleccionarArchivo() {
+            document.getElementById('archivo').click();
+        }
+
+        function subirArchivo() {
+            document.getElementById('formulario').submit();
+        }
+    </script>
+<?php
+if(isset($_FILES['archivo'])){
+    $archivo = $_FILES['archivo'];
+    $nombre = $archivo['name'];
+    $ruta = "ALIMENTOimagen/" . $nombre;
+    move_uploaded_file($archivo['tmp_name'], $ruta);
+    //echo "I";
+    //echo $ruta;
+} else {
+    //echo "";
+}
+?>
+//////////////////////////////
+<td style="background-color: green;">
+    <img id="imagen" src="PECSimagen/AGREGARaudio.png" alt="Imagen" onclick="seleccionarArchivoAudio()">
+    <form id="formularioAudio" action="agregarMultimediaAlimentos.php" method="post" enctype="multipart/form-data" style="display:none;">
+        <input type="file" name="archivoAudio" id="archivoAudio" onchange="subirArchivoAudio()">
+    </form>
+</td> 
+
+<script>
+        function seleccionarArchivoAudio() {
+            document.getElementById('archivoAudio').click();
+        }
+
+        function subirArchivoAudio() {
+            document.getElementById('formularioAudio').submit();
+        }
+</script>
+<?php
+if(isset($_FILES['archivoAudio'])){
+    $archivo = $_FILES['archivoAudio'];
+    $nombre = $archivo['name'];
+    $ruta = "ALIMENTOaudio/" . $nombre;
+    move_uploaded_file($archivo['tmp_name'], $ruta);
+    //echo "I";    //echo $ruta;   
+} else { //echo "";
+}
+?>
+////////////////
+    
+
+
+
+
+
+
+
+
+
+</tr>
+</table>   
+</div>
+    
+    
+    
+<!-- ////////////INICIO MOSTRAR CARPETA 111 ALIMENTOSimagen EN PANEL INFERIOR-->
+<?php 
+//MATRICIAR A LA CARPETA ALIMENTO
+   $ALIMENTOimagen = scandir('ALIMENTOimagen');
+   $RutaALIMENTOimagen=array();
+   $MatrizALIMENTOimagen=array(); //echo $MatrizImagenes[$i];
+   $i=0;
+   foreach ($ALIMENTOimagen as $imagenALIMENTOimagen) {
+      if ($imagenALIMENTOimagen != '.' && $imagenALIMENTOimagen != '..') { //echo $imagen;
+         $MatrizALIMENTOimagen[$i]=$imagenALIMENTOimagen;
+      $RutaALIMENTOimagen[$i]='ALIMENTOimagen/'.$imagenALIMENTOimagen;
+         $RutaALIMENTOaudio[$i]='ALIMENTOaudio/'.$imagenALIMENTOimagen; //echo $RutaImagen[$i];
+         $contenido[$i]=file_get_contents($RutaALIMENTOimagen[$i]); //echo $contenido[$i];
+         $i++; //echo '<td><img src="ALIMENTOimagen/'.$imagen.' " alt="Imammmmgen"></td>';
+         }
+      }
+      $RutaALIMENTOimagenJSON=json_encode($RutaALIMENTOimagen);
+      $RutaALIMENTOaudioJSON=json_encode($RutaALIMENTOaudio);
+
+      //$RutaALIMENTOimagen[0]='PECSimagen/11FRUTAS.png';
+      //$RutaALIMENTOimagen[1]='PECSimagen/12EMOCIONES.png';
+      //$RutaALIMENTOimagen[2]='PECSimagen/13ESCUELA.png';
+?>
+
+
+<div class="panelinferior">
+<?php
+//CARGAR AL PANEL LAS IMAGENES DE LA MATRIZ CARPETA ALIMENTO
+foreach($RutaALIMENTOimagen as $ruta)
+{//echo '<img src="'.$ruta.'" width="77" height="77" alt="ima">';
+   echo '<a href="?imagenn_clicked='.$ruta.'"> <img src="'.$ruta.'" width="77" height="77" alt="ima"> </a>';
+} 
+$clickedImage = filter_input(INPUT_GET, 'imagenn_clicked', FILTER_SANITIZE_STRING);
+//echo $SegundaEtapaDeBorrado;
+if ($clickedImage !== null && is_string($clickedImage)){
+      //echo $PrimeraEtapaDeBorrado; 
+      if (file_exists($clickedImage)) {unlink($clickedImage); }
+}
+
+
+//Verificar si se ha enviado el formulario
+$contadora=222;
+//echo $contadora;
+   $contador_post = filter_input(INPUT_POST, 'contaSCRIPT', FILTER_VALIDATE_INT);
+echo "<p>valor CONTADOR_POST ARRIBA= $contador_post</p>";
+
+
+if($contador_post !== null && $contador_post !== false) {
+    $contadora = $contador_post + 1; 
+    echo $contadora;
+} echo "<p>valor aaaaaaaaaaaactual= $contadora</p>";
+?> <p>CLIKK<?php echo $contadora; ?>VECESS</p>
+
+
+
+<!-- Formulario para enviar el contador al servidor -->
+    <form id="formulario" method="post" action="">
+        <input type="text" name="contaSERVIDOR" id="contaSCRIPT" value="<?php echo $contadora; ?>">
+    </form>   
+
+
+<script>
+function FuncionContador() {
+ console.log("FuncionContador()se a lamamdjkfdkfmdo");  
+// Obtener el valor actual del contador
+var contadora = parseInt(document.getElementById("contaSCRIPT").value);
+//document.write("CONTADORA ANTES DE INVCREMENTO=" + contadora);
+// Incrementar el contador
+contadora++; 
+//document.write("CONTADORA DESPEUDES DE INVCREMENTO=" + contadora);
+// Actualizar el valor del contador en el formulario
+document.getElementById("contaSCRIPT").value = contadora;
+//console.log(contadora);
+// Enviar el formulario para actualizar el contador en el servidor
+document.getElementById("formulario").submit();
+//document.write("valoractuallll=" + contadora);
+}</script>
+     
+    
+    
+</div> 
+<!-- ////////////FIN MOSTRAR CARPETA 111 ALIMENTOSimagen EN PANEL INFERIOR-->
+
+</body>
+</html>
+
+////////////
+333 dos contadores
+////////////
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Subirrrrrr Inmmmmagen</title>
+</head>
+<body>
+    <img src="PECSimagen/17JUGUETES.png" alt="Image" id="imagenSCRIPT" width="77" height="77">
+    <form method="post" action="">
+        <input type="text" name="numeroPHP" id="numeroSCRIPT" readonly style="display: none;">
+        <input             name="valor" id="valorSCRIPT" value="666">
+    </form>
+    
+    <img src="PECSimagen/11FRUTAS.png" alt="Image" id="imagenSCRIPT1" width="77" height="77">
+    <form method="post" action="">
+        <input type="text" name="numeroPHP" id="a" readonly style="display: none;">
+        <input             name="valor" id="b" value="555">
+    </form>
+    <script>
+        var contador111111 = 9;
+        document.getElementById("numeroSCRIPT").value = contador;
+
+        document.getElementById("imagenSCRIPT").addEventListener("click", function() {
+            contador++;
+            document.getElementById("numeroSCRIPT").value = contador;
+            document.getElementById("valorSCRIPT").value = contador;
+            
+            // Enviar el formulario al servidor cuando el contador sea igual a 1
+            if (contador === 0) {
+                document.querySelector("form").submit();
+                
+            }
+        });
+         var contador = 55;
+        document.getElementById("a").value = contador;
+        document.getElementById("imagenSCRIPT1").addEventListener("click", function() {
+            contador++;
+            document.getElementById("a").value = contador;
+            document.getElementById("b").value = contador;
+            
+            // Enviar el formulario al servidor cuando el contador sea igual a 1
+            if (contador === 0) {
+                
+                document.querySelector("formm").submit();
+            }
+        });
+    </script> 
+
+<?php
+// Iniciar o reanudar la sesión
+session_start();
+
+// Obtener el valor del contador del formulario
+$valor = filter_input(INPUT_POST, 'valLMMMMor', FILTER_VALIDATE_INT);
+
+// Si se ha enviado un nuevo valor, actualizar la variable de sesión
+if ($valor !== false && isset($_SESSION['contador'])) {
+    $_SESSION['contador'] = max($_SESSION['contador'], $valor); // Mantener el máximo valor
+}
+
+// Mostrar el valor almacenado en la variable de sesión
+if (isset($_SESSION['contador'])) {
+    echo "actual=== {$_SESSION['contador']}";
+}
+?>
+</body>
+</html>
+
+////////////
+444 SALLEPEC
+////////////
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            color: blue;
+        }
+        .panelsuperior {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(95px, 1fr));
+            grid-gap: 0px;            
+           
+            
+            width: 100%;
+            height: 100px;
+            overflow: auto;
+            color: red;
+            background-color: red;
+            justify-content: center;
+            justify-items: center; 
+            align-items: center;
+        }
+.panelcentral {
+ display: flex;
+ justify-content: center;
+ }
+ #tabla{
+ width: 100%;
+ border-collapse: collapse;
+ }
+ 
+ #tabla td{
+ text-align: center;
+ vertical-align: middle;
+ 
+ justify-content: center;
+ justify-items: center; 
+ align-items: center;
+ 
+ }
+ 
+ #tabla img{
+ display: inline-block;
+ max-width: 100%;
+ max-height:100%
+ }
+  #tabla{
+ border: 5px solid black;
+ 
+ }
+ 
+ 
+.botoncentral {
+ display: inline-block;
+ padding: 10px;
+ background-color: white;
+ border: yellow;
+ cursor: pointer;
+ margin: 5px;
+            
+ color: red;
+ text-align: left;
+ justify-content: center;
+ align-items: center;
+ width: 200px;
+ height: 75px;
+ }
+      
+
+        .panelinferior {
+            width: 100%;
+            height: 373px;
+            overflow: auto;
+            color: lightcoral;
+            background-color: coral;
+            justify-content: center;
+            
+            
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(95px, 1fr));
+            grid-gap: 2px;
+            justify-items: center;
+            align-items: center;
+        }
+        
+        
+        
+        
+        
+        
+        
+        #boton{
+        background-color: fuchsia;    
+        }        
+        #botonR{
+        background-color: aqua;    
+        }
+        
+        
+    </style> 
+    <title>Botones con Imágenes en Panel Scroll</title>
+</head>
+<body>
+   
+<div class="panelsuperior">  echo "ffffffDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDffimagenEliminar";
+ </div> 
+
+
+
+<div class="panelcentral"> 
+<table id="tabla">    
+<tr> 
+    
+    
+<td style="background-color: blue; width: 80px; height:81px">
+<a href="index.php">
+    <img class="imagen" src="PECSimagen/CASA.png" width="77" height="77" alt="Desc">
+    </a>
+</td> 
+
+
+<td style="background-color: blue; width: 160px; height:81px">
+<a href="dialogos.php">
+    <img class="imagen" src="PECSimagen/VOLVER A DIALOGAR.png" width="150" height="77" alt="Desc">
+</a>    
+</td> 
+
+
+<td style="background-color: blue; width: 160px; height:81px">
+   <a href="AgregarEn.php">
+   <img class="imagen" src="PECSimagen/VOLVER A PANEL MULTIMEDIA.png" width="150" height="77" alt="Descrip">
+   </a>
+</td>
+
+
+<td style="background-color: green;"> 
+<img src="PECSimagen/15ALIMENTOS.png" width="300" height="77"  
+     class="imagen" alt="Desc">
+
+</td> 
+
+
+<td style="background-color: green;">
+<img src="PECSimagen/BORRAR.png" alt="Image" id="imagenSCRIPT" width="77" height="77">
+</td>
+
+
+<td style="background-color: green;">
+    <img id="imagen" src="PECSimagen/AGREGARimagen.png" alt="Imagen" onclick="seleccionarArchivo()">
+    <form id="formulario" action="agregarMultimediaAlimentos.php" method="post" enctype="multipart/form-data" style="display:none;">
+        <input type="file" name="archivo" id="archivo" onchange="subirArchivo()">
+    </form>
+</td>   
+<script>
+        function seleccionarArchivo() {
+            document.getElementById('archivo').click();
+        }
+
+        function subirArchivo() {
+            document.getElementById('formulario').submit();
+        }
+    </script>
+<?php
+if(isset($_FILES['archivo'])){
+    $archivo = $_FILES['archivo'];
+    $nombre = $archivo['name'];
+    $ruta = "ALIMENTOimagen/" . $nombre;
+    move_uploaded_file($archivo['tmp_name'], $ruta);
+    //echo "I";
+    //echo $ruta;
+} else {
+    //echo "";
+}
+?>
+<td style="background-color: green;">
+    <img id="imagen" src="PECSimagen/AGREGARaudio.png" alt="Imagen" onclick="seleccionarArchivoAudio()">
+    <form id="formularioAudio" action="agregarMultimediaAlimentos.php" method="post" enctype="multipart/form-data" style="display:none;">
+        <input type="file" name="archivoAudio" id="archivoAudio" onchange="subirArchivoAudio()">
+    </form>
+</td> 
+<script>
+        function seleccionarArchivoAudio() {
+            document.getElementById('archivoAudio').click();
+        }
+
+        function subirArchivoAudio() {
+            document.getElementById('formularioAudio').submit();
+        }
+</script>
+<?php
+if(isset($_FILES['archivoAudio'])){
+    $archivo = $_FILES['archivoAudio'];
+    $nombre = $archivo['name'];
+    $ruta = "ALIMENTOaudio/" . $nombre;
+    move_uploaded_file($archivo['tmp_name'], $ruta);
+    //echo "I";    //echo $ruta;   
+} else { //echo "";
+}
+?>
+</tr>
+</table>   
+</div><!-- ////////////INICIO MOSTRAR CARPETA 111 ALIMENTOSimagen EN PANEL INFERIOR-->
+<?php 
+//MATRICIAR A LA CARPETA ALIMENTO
+   $ALIMENTOimagen = scandir('ALIMENTOimagen');
+   $RutaALIMENTOimagen=array();
+   $MatrizALIMENTOimagen=array(); //echo $MatrizImagenes[$i];
+   $i=0;
+   foreach ($ALIMENTOimagen as $imagenALIMENTOimagen) {
+      if ($imagenALIMENTOimagen != '.' && $imagenALIMENTOimagen != '..') { //echo $imagen;
+         $MatrizALIMENTOimagen[$i]=$imagenALIMENTOimagen;
+      $RutaALIMENTOimagen[$i]='ALIMENTOimagen/'.$imagenALIMENTOimagen;
+         $RutaALIMENTOaudio[$i]='ALIMENTOaudio/'.$imagenALIMENTOimagen; //echo $RutaImagen[$i];
+         $contenido[$i]=file_get_contents($RutaALIMENTOimagen[$i]); //echo $contenido[$i];
+         $i++; //echo '<td><img src="ALIMENTOimagen/'.$imagen.' " alt="Imammmmgen"></td>';
+         }
+      }
+      $RutaALIMENTOimagenJSON=json_encode($RutaALIMENTOimagen);
+      $RutaALIMENTOaudioJSON=json_encode($RutaALIMENTOaudio);
+
+      //$RutaALIMENTOimagen[0]='PECSimagen/11FRUTAS.png';
+      //$RutaALIMENTOimagen[1]='PECSimagen/12EMOCIONES.png';
+      //$RutaALIMENTOimagen[2]='PECSimagen/13ESCUELA.png';
+?>
+<div class="panelinferior">
+<?php
+//CARGAR AL PANEL LAS IMAGENES DE LA MATRIZ CARPETA ALIMENTO
+foreach($RutaALIMENTOimagen as $ruta)
+{//echo '<img src="'.$ruta.'" width="77" height="77" alt="ima">';
+   echo '<a href="?imagenn_clicked='.$ruta.'"> <img src="'.$ruta.'" width="77" height="77" alt="ima"> </a>';
+} 
+session_start();$valor = filter_input(INPUT_POST, 'valorPHP', FILTER_VALIDATE_INT);
+if (!isset($_SESSION['contador'])) {
+    $_SESSION['contador'] = 0;
+}
+
+//echo "DolarValorUno=== $valor";
+if ($valor !== false) {
+    //echo "DolarValorDos=== $valor";
+    $_SESSION['contador'] = max($_SESSION['contador'], $valor); // Mantener el máximo valor
+}
+if (isset($_SESSION['contador'])) {
+    //echo "valoractual=== {$_SESSION['contador']}";
+    $valor=$_SESSION['contador'];   
+}
+//echo "DolarValorTRES=== $valor";
+ $clickedImage = filter_input(INPUT_GET, 'imagenn_clicked', FILTER_SANITIZE_STRING);
+ //echo "DolarValorCUATRO=== $valor";
+if ($clickedImage !== null && is_string($clickedImage) && $valor==1){
+      //echo "RUTA ELIMINADO== $clickedImage"; 
+      if (file_exists($clickedImage)) {unlink($clickedImage); }
+}
+?>  
+</div> 
+<!-- ////////////FIN MOSTRAR CARPETA 111 ALIMENTOSimagen EN PANEL INFERIOR-->
+<form method="post" action="">
+        <input type="text" name="numeroPHP" id="numeroSCRIPT" readonly style="display: none;">
+        <input name="valorPHP" id="valorSCRIPT" value="">
+</form>
+    <script>
+        var contador = 0;
+        document.getElementById("numeroSCRIPT").value = contador;
+
+        document.getElementById("imagenSCRIPT").addEventListener("click", function() {
+            contador++;
+            document.getElementById("numeroSCRIPT").value = contador;
+            document.getElementById("valorSCRIPT").value = contador;
+            
+            // Enviar el formulario al servidor cuando el contador sea igual a 1
+            if (contador === 1) {
+                document.querySelector("form").submit();
+                
+            }
+        });
+    </script> 
+
+</body>
+</html>
+
+
+////////////
+555
+////////////
+<!-- index.php -->
+<!DOCTYPE html>
+
+<head>
+    <title>Mi página web</title>
+    <style>
+        .panel {
+           
+            
+            border: 2px solid black;
+            padding: 0px;
+            margin-bottom: 1px;
+            display: flex;
+            justify-content: center;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="panel" id="panel-SUPERIOR" style="overflow: auto; width: 1215px; height: 70px;">
+    </div>
+
+   <?php 
+////////////
+//MATRICIANDO LAS IMAGENES DE CARPETAS NO SUB PESTANAS            
+//////////// 
+////////////INICIO MATRICIAR 111NECESIDADESimagen
+echo "<tr>";
+$NECESIDADESimagen1 = scandir('1NECESIDADESimagen');
+$Ruta1NECESIDADESimagen=array();
+$Matriz1NECESIDADESimagen=array();
+$i=0;
+foreach ($NECESIDADESimagen1 as $imagen1NECESIDADESimagen) {
+   if ($imagen1NECESIDADESimagen != '.' && $imagen1NECESIDADESimagen != '..') {
+      $Matriz1NECESIDADESimagen[$i]=$imagen1NECESIDADESimagen;
+      $Ruta1NECESIDADESimagen[$i]='1NECESIDADESimagen/'.$imagen1NECESIDADESimagen;
+      $Ruta1NECESIDADESaudio[$i]='1NECESIDADESaudio/'.$imagen1NECESIDADESimagen;
+      //echo $RutaImagen[$i]; //echo $contenido[$i]; //echo $imagen;
+      $i++;
+   }
+}
+$RUTA1NECESIDADESimagenJSON=json_encode($Ruta1NECESIDADESimagen);
+$RUTA1NECESIDADESaudioJSON=json_encode($Ruta1NECESIDADESaudio);
+////////////FIN MATRICIAR 111NECESIDADESimagen
+             
+
+
+
+////////////
+//MATRICIANDO LAS IMAGENES DE CARPETAS SUBPESTAÑAS SP            
+//////////// 
+////////////////////////INICIO MATRICIAR 222ALIMENTOSimagenSUBPESTANA   
+echo "<tr>";
+   $NECESIDADESimagenSUBPESTANA1 = scandir('1NECESIDADESimagenSUBPESTANA');
+   $RUTA1NECESIDADESimagenSUBPESTANA=array();
+   $Matriz1NECESIDADESimagenSUBPESTANA=array();
+   $i=0;
+   foreach ($NECESIDADESimagenSUBPESTANA1 as $imagen) {
+      if ($imagen != '.' && $imagen != '..') {
+      $Matriz1NECESIDADESimagenSUBPESTANA[$i]=$imagen;
+      $RUTA1NECESIDADESimagenSUBPESTANA[$i]='1NECESIDADESimagenSUBPESTANA/'.$imagen;
+      //$RutaAudio[$i]='ALIMENTOaudio/'.$imagen; //echo $RutaImagen[$i]; //echo $contenido[$i];   //echo $imagen; //echo $MatrizImagenes[$i];
+      $i++;
+      }
+}
+$RUTA1NECESIDADESimagenSUBPESTANAJSON=json_encode($RUTA1NECESIDADESimagenSUBPESTANA);
+////////////////////////FIN MATRICIAR 222ALIMENTOSimagenSUBPESTANA
+?>
+<div class="panel" id="panel-CENTRAL" style="width: 1215px; height: 150px;">
+<table> 
+<tr>
+<td style="padding: 0px;"> <img src="PECSimagen/1NECESIDADES.png" onclick="mostraraNECESIDADES()" style="display: block; margin: 0; width: 257px; height:65px;"> </td>
+<td><img src="PECSimagen/2ALIMENTOS.png"    onclick="mostrar2ALIMENTOSimagen()"   style="vertical-align:-20px; padding:2px; margin-bottom:1px; width:257px; height:65px;"></td>
+<td><img src="PECSimagen/3ESCUELA.png"      onclick="mostrar3ESCUELAimagen()"     style="vertical-align:-20px; text-align:center; padding:2px; margin-bottom:1px; width:257px; height:65px;"></td>
+<td><img src="PECSimagen/4ACTIVIDADES.png"  onclick="mostrar4ACTIVIDADESimagen()" style="vertical-align:-20px; text-align:center; padding:2px; margin-bottom:1px; width:257px; height:65px;"></td>
+<td><img src="PECSimagen/5ROPA.png"         onclick="mostrar5ROPAimagen()"       style="vertical-align:-20px; padding:2px; margin-bottom:1px; width:135px; height:62px;"></td>
+</tr>
+      
+<tr>
+<td><img src="PECSimagen/6HIGIENE.png"  onclick="mostrar6HIGIENEimagen()" style="text-align:center; text-align:left; padding:2px; margin-bottom:1px; width:257px; height:65px;"></td>
+<td><img src="PECSimagen/7CUERPO.png"   onclick="mostrar7CUERPOimagen()" style="text-align:center; padding:2px; margin-bottom:1px; width:257px; height:65px;"></td>   
+<td><img src="PECSimagen/8ANIMALES.png" onclick="mostrar8ANIMALESimagen()" style="text-align:center; padding:2px; margin-bottom:1px; width:257px; height:65px;"></td>   
+<td><img src="PECSimagen/9OTROS.png"    onclick="mostrar9OTROSimagen()" style="text-align:center; padding:2px; margin-bottom:1px; width:257px; height:65px;"></td>
+<td> <a href="AgregarEn.php"> <img src="PECSimagen/IR A AGREGAR MULTIMEDIA.png" style="text-align:center; padding:2px; margin-bottom:1px; width:135px; height:65px;"></a> </td>
+</tr>
+</table>
+</div>
+
+
+    
+    
+    
+    
+    
+<div class="panel" id="panel-CENTRALAUXILIAR" style="overflow-x: auto; width: 1215px; height: 40px;"></div>
+   
+<div class="panel" id="panel-INFERIOR" style="overflow-y: auto; width: 1215px; height: 251px;"></div>
+<div class="panel" id="panel-INFERIORAUXILIAR" style="overflow: auto; width: 1215px; height: 20px;"></div>
+
+<script>
+////////////INICIO 111 COLOCA CARPETAS ALIMENTOimagen Y ALIMENTOimagenSUBPESTANA EN PANELES
+var RUTA1NECESIDADESimagen = <?php echo $RUTA1NECESIDADESimagenJSON; ?>;
+var RUTA1NECESIDADESaudio = <?php echo $RUTA1NECESIDADESaudioJSON; ?>; 
+var RUTA1NECESIDADESimagenSUBPESTANA = <?php echo $RUTA1NECESIDADESimagenSUBPESTANAJSON; ?>;
+        
+    function mostraraNECESIDADES(){
+for(var i=0; i<RUTA1NECESIDADESimagenSUBPESTANA.length; i++){
+(function(i){       
+var PANELCENTRALAUXILIAR = document.getElementById("panel-CENTRALAUXILIAR");
+var aNECESIDADESimagenSUBPESTANAPANELCENTRALAUXILIAR = document.createElement("img");  //console.log(RI[i]);  //console.log(RISP[1]);
+    aNECESIDADESimagenSUBPESTANAPANELCENTRALAUXILIAR.src = RUTA1NECESIDADESimagenSUBPESTANA[i];
+    aNECESIDADESimagenSUBPESTANAPANELCENTRALAUXILIAR.style.width="70px"; aNECESIDADESimagenSUBPESTANAPANELCENTRALAUXILIAR.style.height="69px"; aNECESIDADESimagenSUBPESTANAPANELCENTRALAUXILIAR.style.marginRight="15px";
+PANELCENTRALAUXILIAR.appendChild(aNECESIDADESimagenSUBPESTANAPANELCENTRALAUXILIAR);
+
+aNECESIDADESimagenSUBPESTANAPANELCENTRALAUXILIAR.addEventListener("click", function() { 
+for(var j=0; j<RUTA1NECESIDADESimagen.length; j++){
+(function(j){
+var PANELINFERIOR=document.getElementById("panel-INFERIOR");
+var aNECESIDADESimagenPANELINFERIOR = document.createElement("img");  //console.log(RUTAaNECESIDADESimagen[1]);  
+    aNECESIDADESimagenPANELINFERIOR.src =  RUTA1NECESIDADESimagen[j];
+    aNECESIDADESimagenPANELINFERIOR.style.width="70px"; aNECESIDADESimagenPANELINFERIOR.style.height="70px"; aNECESIDADESimagenPANELINFERIOR.style.marginRight="7px";
+PANELINFERIOR.appendChild(aNECESIDADESimagenPANELINFERIOR);
+
+
+////////////
+aNECESIDADESimagenPANELINFERIOR.addEventListener("click", function() {    
+var PANELSUPERIOR=document.getElementById("panel-SUPERIOR"); 
+var aNECESIDADESimagenPANELSUPERIOR = document.createElement("img");//console.log(RutaImagenS);  
+    aNECESIDADESimagenPANELSUPERIOR.src = RUTA1NECESIDADESimagen[j]; 
+    aNECESIDADESimagenPANELSUPERIOR.style.width="70px"; aNECESIDADESimagenPANELSUPERIOR.style.height="70px"; aNECESIDADESimagenPANELSUPERIOR.style.marginRight="7px";
+PANELSUPERIOR.appendChild(aNECESIDADESimagenPANELSUPERIOR);
+               
+aNECESIDADESimagenPANELSUPERIOR.addEventListener("click", function() {
+const audio = new Audio(RUTA1NECESIDADESaudio[j].replace(".png", ".wav"));
+    audio.play();
+      });
+   });
+//////////// 
+})(j);  
+}     
+});
+//////
+})(i); 
+}
+}
+//////
+////////////INICIO 111 COLOCA CARPETAS ALIMENTOimagen Y ALIMENTOimagenSUBPESTANA EN PANELES
+        
+    </script>
+</body>
+
+</html>
+
+
+
+
+
+
+////////////
+666 PONER IMAGENES EN PANELES Y REPRODUCIR-SCRIPT-DIALOGOS
+///////////
+<!-- index.php -->
+<!DOCTYPE html>
+
+<head>
+    <title>Mi página web</title>
+    <style>
+        .panel {
+           
+            
+            border: 2px solid black;
+            padding: 0px;
+            margin-bottom: 1px;
+            display: flex;
+            justify-content: center;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="panel" id="panel-SUPERIOR" style="overflow: auto; width: 1215px; height: 70px;">
+    </div>
+
+   <?php 
+////////////
+//MATRICIANDO LAS IMAGENES DE CARPETAS NO SUB PESTANAS            
+//////////// 
+////////////INICIO MATRICIAR 111NECESIDADESimagen
+echo "<tr>";
+$NECESIDADESimagen1 = scandir('1NECESIDADESimagen');
+$Ruta1NECESIDADESimagen=array();
+$Matriz1NECESIDADESimagen=array();
+$i=0;
+foreach ($NECESIDADESimagen1 as $imagen1NECESIDADESimagen) {
+   if ($imagen1NECESIDADESimagen != '.' && $imagen1NECESIDADESimagen != '..') {
+      $Matriz1NECESIDADESimagen[$i]=$imagen1NECESIDADESimagen;
+      $Ruta1NECESIDADESimagen[$i]='1NECESIDADESimagen/'.$imagen1NECESIDADESimagen;
+      $Ruta1NECESIDADESaudio[$i]='1NECESIDADESaudio/'.$imagen1NECESIDADESimagen;
+      //echo $RutaImagen[$i]; //echo $contenido[$i]; //echo $imagen;
+      $i++;
+   }
+}
+$RUTA1NECESIDADESimagenJSON=json_encode($Ruta1NECESIDADESimagen);
+$RUTA1NECESIDADESaudioJSON=json_encode($Ruta1NECESIDADESaudio);
+////////////FIN MATRICIAR 111NECESIDADESimagen
+             
+
+
+
+////////////
+//MATRICIANDO LAS IMAGENES DE CARPETAS SUBPESTAÑAS SP            
+//////////// 
+////////////////////////INICIO MATRICIAR 222ALIMENTOSimagenSUBPESTANA   
+echo "<tr>";
+   $NECESIDADESimagenSUBPESTANA1 = scandir('1NECESIDADESimagenSUBPESTANA');
+   $RUTA1NECESIDADESimagenSUBPESTANA=array();
+   $Matriz1NECESIDADESimagenSUBPESTANA=array();
+   $i=0;
+   foreach ($NECESIDADESimagenSUBPESTANA1 as $imagen) {
+      if ($imagen != '.' && $imagen != '..') {
+      $Matriz1NECESIDADESimagenSUBPESTANA[$i]=$imagen;
+      $RUTA1NECESIDADESimagenSUBPESTANA[$i]='1NECESIDADESimagenSUBPESTANA/'.$imagen;
+      //$RutaAudio[$i]='ALIMENTOaudio/'.$imagen; //echo $RutaImagen[$i]; //echo $contenido[$i];   //echo $imagen; //echo $MatrizImagenes[$i];
+      $i++;
+      }
+}
+$RUTA1NECESIDADESimagenSUBPESTANAJSON=json_encode($RUTA1NECESIDADESimagenSUBPESTANA);
+////////////////////////FIN MATRICIAR 222ALIMENTOSimagenSUBPESTANA
+?>
+<div class="panel" id="panel-CENTRAL" style="width: 1215px; height: 150px;">
+<table> 
+<tr>
+<td style="padding: 0px;"> <img src="PECSimagen/1NECESIDADES.png" onclick="mostraraNECESIDADES()" style="display: block; margin: 0; width: 257px; height:65px;"> </td>
+<td><img src="PECSimagen/2ALIMENTOS.png"    onclick="mostrar2ALIMENTOSimagen()"   style="vertical-align:-20px; padding:2px; margin-bottom:1px; width:257px; height:65px;"></td>
+<td><img src="PECSimagen/3ESCUELA.png"      onclick="mostrar3ESCUELAimagen()"     style="vertical-align:-20px; text-align:center; padding:2px; margin-bottom:1px; width:257px; height:65px;"></td>
+<td><img src="PECSimagen/4ACTIVIDADES.png"  onclick="mostrar4ACTIVIDADESimagen()" style="vertical-align:-20px; text-align:center; padding:2px; margin-bottom:1px; width:257px; height:65px;"></td>
+<td><img src="PECSimagen/5ROPA.png"         onclick="mostrar5ROPAimagen()"       style="vertical-align:-20px; padding:2px; margin-bottom:1px; width:135px; height:62px;"></td>
+</tr>
+      
+<tr>
+<td><img src="PECSimagen/6HIGIENE.png"  onclick="mostrar6HIGIENEimagen()" style="text-align:center; text-align:left; padding:2px; margin-bottom:1px; width:257px; height:65px;"></td>
+<td><img src="PECSimagen/7CUERPO.png"   onclick="mostrar7CUERPOimagen()" style="text-align:center; padding:2px; margin-bottom:1px; width:257px; height:65px;"></td>   
+<td><img src="PECSimagen/8ANIMALES.png" onclick="mostrar8ANIMALESimagen()" style="text-align:center; padding:2px; margin-bottom:1px; width:257px; height:65px;"></td>   
+<td><img src="PECSimagen/9OTROS.png"    onclick="mostrar9OTROSimagen()" style="text-align:center; padding:2px; margin-bottom:1px; width:257px; height:65px;"></td>
+<td> <a href="AgregarEn.php"> <img src="PECSimagen/IR A AGREGAR MULTIMEDIA.png" style="text-align:center; padding:2px; margin-bottom:1px; width:135px; height:65px;"></a> </td>
+</tr>
+</table>
+</div>
+
+
+    
+    
+    
+    
+    
+<div class="panel" id="panel-CENTRALAUXILIAR" style="overflow-x: auto; width: 1215px; height: 73px;"></div>
+   
+<div class="panel" id="panel-INFERIOR" style="overflow-y: auto; width: 1215px; height: 251px;"></div>
+<div class="panel" id="panel-INFERIORAUXILIAR" style="overflow: auto; width: 1215px; height: 20px;"></div>
+
+<script>
+////////////INICIO 111 COLOCA CARPETAS ALIMENTOimagen Y ALIMENTOimagenSUBPESTANA EN PANELES
+function mostraraNECESIDADES(){let RUTA1NECESIDADESimagen = <?php echo $RUTA1NECESIDADESimagenJSON; ?>;
+let RUTA1NECESIDADESaudio = <?php echo $RUTA1NECESIDADESaudioJSON; ?>; 
+let RUTA1NECESIDADESimagenSUBPESTANA = <?php echo $RUTA1NECESIDADESimagenSUBPESTANAJSON; ?>;
+//let PANELCENTRALAUXILIAR = document.querySelector("panel-CENTRALAUXILIAR");
+let PANELCENTRALAUXILIAR = document.getElementById("panel-CENTRALAUXILIAR");
+PANELCENTRALAUXILIAR.innerHTML=""; 
+
+//PONER IMAGENES EN PANEL CENTRAL AUXILIAR
+for(var i=0; i<RUTA1NECESIDADESimagenSUBPESTANA.length; i++){
+   //let imagen = document.createElement("img");
+   //imagen.src = "ALIMENTOimagen/" + elementos[i];
+   //panelinferior.appendChild(boton);
+   let aNECESIDADESimagenSUBPESTANAPANELCENTRALAUXILIAR = document.createElement("img");  //console.log(RI[i]);  //console.log(RISP[1]);
+   aNECESIDADESimagenSUBPESTANAPANELCENTRALAUXILIAR.src = RUTA1NECESIDADESimagenSUBPESTANA[i];
+   aNECESIDADESimagenSUBPESTANAPANELCENTRALAUXILIAR.style.width="70px"; aNECESIDADESimagenSUBPESTANAPANELCENTRALAUXILIAR.style.height="69px"; aNECESIDADESimagenSUBPESTANAPANELCENTRALAUXILIAR.style.marginRight="15px";
+   PANELCENTRALAUXILIAR.appendChild(aNECESIDADESimagenSUBPESTANAPANELCENTRALAUXILIAR);
+   
+   //INICIO PONER IMAGENES EN PANEL INFERIOR
+   aNECESIDADESimagenSUBPESTANAPANELCENTRALAUXILIAR.addEventListener("click", function() { 
+   for(var j=0; j<RUTA1NECESIDADESimagen.length; j++){
+   (function(j){
+      var PANELINFERIOR=document.getElementById("panel-INFERIOR");
+      var aNECESIDADESimagenPANELINFERIOR = document.createElement("img");  //console.log(RUTAaNECESIDADESimagen[1]);  
+      aNECESIDADESimagenPANELINFERIOR.src =  RUTA1NECESIDADESimagen[j];
+      aNECESIDADESimagenPANELINFERIOR.style.width="70px"; aNECESIDADESimagenPANELINFERIOR.style.height="70px"; aNECESIDADESimagenPANELINFERIOR.style.marginRight="7px";
+      PANELINFERIOR.appendChild(aNECESIDADESimagenPANELINFERIOR);
+      
+      //PONER IMAGENES EN PANEL SUPERIOR
+      aNECESIDADESimagenPANELINFERIOR.addEventListener("click", function() {    
+      var PANELSUPERIOR=document.getElementById("panel-SUPERIOR"); 
+      var aNECESIDADESimagenPANELSUPERIOR = document.createElement("img");//console.log(RutaImagenS);  
+      aNECESIDADESimagenPANELSUPERIOR.src = RUTA1NECESIDADESimagen[j]; 
+      aNECESIDADESimagenPANELSUPERIOR.style.width="70px"; aNECESIDADESimagenPANELSUPERIOR.style.height="70px"; aNECESIDADESimagenPANELSUPERIOR.style.marginRight="7px";
+      PANELSUPERIOR.appendChild(aNECESIDADESimagenPANELSUPERIOR);
+      //REPRODUCIR PANEL SUPERIOR         
+      aNECESIDADESimagenPANELSUPERIOR.addEventListener("click", function() {
+      const audio = new Audio(RUTA1NECESIDADESaudio[j].replace(".png", ".wav"));
+      audio.play();
+      });
+   });
+//////////// 
+})(j);  
+}     
+});
+//FIN PONER IMAGENES EN PANEL INFERIOR
+}
+}
+////////////INICIO 111 COLOCA CARPETAS ALIMENTOimagen Y ALIMENTOimagenSUBPESTANA EN PANELES     
+    </script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+////////////
+777 JAVA WEB-NET BENAS 8.2- DIALOGOS JSP DOM 28 DE ABRIL DE 2024
+////////////
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            color: blue;
+        }
+        .panelsuperior {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(95px, 1fr));
+            grid-gap: 0px;            
+           
+            
+            width: 100%;
+            height: 100px;
+            overflow: auto;
+            color: red;
+            background-color: red;
+            justify-content: center;
+            justify-items: center; 
+            align-items: center;
+        }
+.panelcentral {
+ display: flex;
+ justify-content: center;
+ }
+ #tabla{
+ width: 100%;
+ border-collapse: collapse;
+ }
+ 
+ #tabla td{
+ text-align: center;
+ vertical-align: middle;
+ 
+ justify-content: center;
+ justify-items: center; 
+ align-items: center;
+ 
+ }
+ 
+ #tabla img{
+ display: inline-block;
+ max-width: 100%;
+ max-height:100%
+ }
+  #tabla{
+ border: 5px solid black;
+ 
+ }
+ 
+ 
+.botoncentral {
+ display: inline-block;
+ padding: 10px;
+ background-color: white;
+ border: yellow;
+ cursor: pointer;
+ margin: 5px;
+            
+ color: red;
+ text-align: left;
+ justify-content: center;
+ align-items: center;
+ width: 200px;
+ height: 75px;
+ }
+      
+
+        .panelinferior {
+            width: 100%;
+            height: 300px;
+            overflow: auto;
+            color: lightcoral;
+            background-color: coral;
+            justify-content: center;
+            
+            
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(95px, 1fr));
+            grid-gap: 2px;
+            justify-items: center;
+            align-items: center;
+        }
+        
+        
+        
+        
+        
+        
+        
+        #boton{
+        background-color: fuchsia;    
+        }        
+        #botonR{
+        background-color: aqua;    
+        }
+        
+        
+    </style> 
+    <title>Botones con Imágenes en Panel Scroll</title>
+</head>
+<body>
+   
+    
+    
+    <div class="panelsuperior">   </div> 
+      
+    <div class="panelcentral"> 
+    <table id="tabla">    
+        <tr> 
+<td style="background-color: green;"> 
+<img onclick="ALIMENTOimagen()" class="imagen" src="PECSimagen/15ALIMENTOS.png" width="270" height="60" alt="Desc">
+</td> 
+<td style="background-color: green;"> 
+<img onclick="EMOCIONESimagen()" class="imagen" src="PECSimagen/12EMOCIONES.png" width="270" height="60" alt="Descripción de la imagen"> </a></td> 
+<td style="background-color: green;">
+<img onclick="ESCUELAimagen()" class="imagen" src="PECSimagen/13ESCUELA.png" width="270" height="60" alt="Descripción de la imagen"> </a></td> 
+<td style="background-color: green;"> 
+<img onclick="ACTIVIDADESimagen()" class="imagen" src="PECSimagen/16ACTIVIDADESENHOGAR.png" width="270" height="60" alt="Descripción de la imagen"> </a></td> 
+<td style="background-color: green;"> 
+<img onclick="OTROSimagen()" class="imagen" src="PECSimagen/otros.png" width="110" height="60" alt="Descripción de la imagen"> </a></td> 
+        </tr>
+ <tr> 
+<td style="background-color: green;"> 
+<img onclick="JUGUETESimagen()" class="imagen" src="PECSimagen/17JUGUETES.png" width="270" height="60" alt="Descripción de la imagen"> </a></td> 
+<td style="background-color: green;"> 
+<img onclick="FRUTASimagen()" class="imagen" src="PECSimagen/11FRUTAS.png" width="270" height="60" alt="Descripción de la imagen"> </a></td> 
+<td style="background-color: green;">
+<img onclick="CUERPOimagen()" class="imagen" src="PECSimagen/14CUERPO.png" width="270" height="60" alt="Descripción de la imagen"> </a></td> 
+<td style="background-color: green;"> 
+<img onclick="ANIMALESimagen()" class="imagen" src="PECSimagen/18ANIMALES.png" width="270" height="60" alt="Descripción de la imagen"> </a></td> 
+
+<td style="background-color: green;"> 
+    <a href="agregarMultimediaJSP.jsp">
+    <img src="PECSimagen/IR A AGREGAR MULTIMEDIA.png" width="110" height="60" alt="Descripción de la imagen"> </a>
+</td> 
+</tr>    
+    </table>
+    </div>
+    
+      <div class="panelinferior">
+      <img src="aIMAGENESdialogos/IMAGENESdialogos1/1Yo.png"  width="77" height="77" alt="">;
+      <img src="aIMAGENESdialogos/IMAGENESdialogos1/7Quiero.png"  width="77" height="77" alt="">;
+      <img src="aIMAGENESdialogos/IMAGENESdialogos1/25Comer.png"  width="77" height="77" alt="">;
+      </div> 
+
+<table>
+   <tr>
+      <td style="background-color: green;">
+       <a href="index.jsp">    
+      <img id="borrar" src="PECSimagen/CASA.png" width="100" height="20" alt="Desc"> </a>
+      </td>
+   </tr> 
+</table>
+    
+    <script>
+/////////// FUNCION 111 ///////////////
+function ALIMENTOimagen(){
+let nombreImagen = '<%= request.getAttribute("ALIMENTOimagen") %>';
+let elementos = nombreImagen.substring(1, nombreImagen.length - 1).split(", ");
+console.log(elementos);
+let panelsuperior = document.querySelector(".panelsuperior");
+let panelinferior = document.querySelector(".panelinferior");
+panelinferior.innerHTML="";
+const imagenQueBorra=document.getElementById("borrar");
+
+   for (let i = 0; i < elementos.length; i++) {
+      let boton = document.createElement("button");
+      let descripcion = document.createElement("p");
+      let imagen = document.createElement("img");
+      descripcion.textContent = "IMAGEN" + (i + 1);
+      descripcion.style.fontSize = "0px";
+      imagen.src = "ALIMENTOimagen/" + elementos[i];
+      imagen.style.width = "77px";
+      boton.id="boton";
+      //boton.style.backgroundColor="";
+      boton.appendChild(descripcion);
+      boton.appendChild(imagen);
+      panelinferior.appendChild(boton);
+      panelinferior.style.justifyContent="center";
+      
+imagenQueBorra.addEventListener("click", function(){
+  //var rutaArchivo="ALIMENTOimagen/17Bien.png";
+  boton.addEventListener("click", function() {
+  var archivo = "ALIMENTOimagen/" + elementos[i];
+  // Crear una solicitud AJAX para enviar el archivo al servlet
+  var formData = new FormData(); formData.append('ArchivoParaEliminar', archivo);
+  var xhr = new XMLHttpRequest(); xhr.open("POST", "eliminarMultimediaAlimentosSERVLET", true);
+   
+  });
+  
+});
+      
+      boton.addEventListener("click", function() {
+         let imagenCopia = imagen.cloneNode(true);
+         var botonR = document.createElement("button");
+      //let panelsuperior=document.getElementById("panelsuperior");
+         let descripcionR = document.createElement("p");
+         let imagenR = document.createElement("img");
+         descripcionR.textContent = "REFLE " + (i + 1);
+         descripcionR.style.fontSize = "0px";
+         imagenR.src = "ALIMENTOimagen/" + elementos[i];
+         imagenR.style.width = "77px";
+         
+         botonR.id="botonR";
+         botonR.appendChild(descripcionR);
+         botonR.appendChild(imagenR);
+         panelsuperior.appendChild(botonR);
+      //botonR.style.display="block";
+      //botonR.style.margin="auto";
+      //botonR.style.marginTop="5px";
+               
+         botonR.addEventListener("click", function() {
+            const audio = new Audio("ALIMENTOaudio/" + elementos[i].replace(".png", ".wav"));
+            //document.write("**5555555***JSP CONTADOR:i=" + i); 
+            audio.play();
+                });
+            });
+        }
+}
+//////////   FIN DE FUNCION 111   ///////////////
+//////////   FUNCION 222   ///////////////
+function EMOCIONESimagen(){
+let nombreImagen = '<%= request.getAttribute("EMOCIONESimagen") %>';
+let elementosEMOCIONES = nombreImagen.substring(1, nombreImagen.length - 1).split(", ");
+console.log(elementosEMOCIONES);
+let panelsuperior = document.querySelector(".panelsuperior");
+let panelinferior = document.querySelector(".panelinferior");
+panelinferior.innerHTML="";
+
+
+   for (let i = 0; i < elementosEMOCIONES.length; i++) {
+      let boton = document.createElement("button");
+      let descripcion = document.createElement("p");
+      let imagen = document.createElement("img");
+      descripcion.textContent = "IMAGEN" + (i + 1);
+      descripcion.style.fontSize = "0px";
+      imagen.src = "EMOCIONESimagen/" + elementosEMOCIONES[i];
+      imagen.style.width = "77px";
+      
+      boton.id="boton";
+      boton.appendChild(descripcion);
+      boton.appendChild(imagen);
+      panelinferior.appendChild(boton);
+      
+      boton.addEventListener("click", function() {
+         let imagenCopia = imagen.cloneNode(true);
+         let botonR = document.createElement("button");
+         let descripcionR = document.createElement("p");
+         let imagenR = document.createElement("img");
+         descripcionR.textContent = "REFLE " + (i + 1);
+         descripcionR.style.fontSize = "0px";
+         imagenR.src = "EMOCIONESimagen/" + elementosEMOCIONES[i];
+         imagenR.style.width = "77px";
+         
+         botonR.id="botonR";
+         botonR.appendChild(descripcionR);
+         botonR.appendChild(imagenR);
+         panelsuperior.appendChild(botonR);
+         
+         botonR.addEventListener("click", function() {
+            const audio = new Audio("EMOCIONESaudio/" + elementosEMOCIONES[i].replace(".png", ".wav"));
+            //document.write("**5555555***JSP CONTADOR:i=" + i); 
+            audio.play();
+                });
+            });
+        }
+}
+//////////   FIN DE FUNCION 222   ///////////////
+//////////   FUNCION 333   ///////////////////
+function ESCUELAimagen(){
+let nombreImagen = '<%= request.getAttribute("ESCUELAimagen") %>';
+let elementosESCUELA = nombreImagen.substring(1, nombreImagen.length - 1).split(", ");
+console.log(elementosESCUELA);
+let panelsuperior = document.querySelector(".panelsuperior");
+let panelinferior = document.querySelector(".panelinferior");
+panelinferior.innerHTML="";
+
+
+   for (let i = 0; i < elementosESCUELA.length; i++) {
+      let boton = document.createElement("button");
+      let descripcion = document.createElement("p");
+      let imagen = document.createElement("img");
+      descripcion.textContent = "IMAGEN" + (i + 1);
+      descripcion.style.fontSize = "0px";
+      imagen.src = "ESCUELAimagen/" + elementosESCUELA[i];
+      imagen.style.width = "77px";
+      
+      boton.id="boton";  
+      boton.appendChild(descripcion);
+      boton.appendChild(imagen);
+      panelinferior.appendChild(boton);
+      
+      boton.addEventListener("click", function() {
+         var imagenCopia = imagen.cloneNode(true);
+         var botonR = document.createElement("button");
+         var descripcionR = document.createElement("p");
+         var imagenR = document.createElement("img");
+         descripcionR.textContent = "REFLE " + (i + 1);
+         descripcionR.style.fontSize = "0px";
+         imagenR.src = "ESCUELAimagen/" + elementosESCUELA[i];
+         imagenR.style.width = "77px";
+        
+         botonR.id="botonR";
+         botonR.appendChild(descripcionR);
+         botonR.appendChild(imagenR);
+         panelsuperior.appendChild(botonR);
+         
+         botonR.addEventListener("click", function() {
+            const audio = new Audio("ESCUELAaudio/" + elementosESCUELA[i].replace(".png", ".wav"));
+            //document.write("**5555555***JSP CONTADOR:i=" + i); 
+            audio.play();
+                });
+            });
+        }
+}
+//////////   FIN DE FUNCION 333   ///////////////
+/////////// FUNCION 444 ///////////////
+function ACTIVIDADESimagen(){
+let nombreImagen = '<%= request.getAttribute("ALIMENTOimagen") %>';
+let elementos = nombreImagen.substring(1, nombreImagen.length - 1).split(", ");
+console.log(elementos);
+let panelsuperior = document.querySelector(".panelsuperior");
+let panelinferior = document.querySelector(".panelinferior");
+panelinferior.innerHTML="";
+
+   for (let i = 0; i < elementos.length; i++) {
+      let boton = document.createElement("button");
+      let descripcion = document.createElement("p");
+      let imagen = document.createElement("img");
+      descripcion.textContent = "IMAGEN" + (i + 1);
+      descripcion.style.fontSize = "0px";
+      imagen.src = "ALIMENTOimagen/" + elementos[i];
+      imagen.style.width = "77px";
+      
+      boton.id="boton";
+      boton.appendChild(descripcion);
+      boton.appendChild(imagen);
+      panelinferior.appendChild(boton);
+      
+      boton.addEventListener("click", function() {
+         let imagenCopia = imagen.cloneNode(true);
+         let botonR = document.createElement("button");
+         let descripcionR = document.createElement("p");
+         let imagenR = document.createElement("img");
+         descripcionR.textContent = "REFLE " + (i + 1);
+         descripcionR.style.fontSize = "0px";
+         imagenR.src = "ALIMENTOimagen/" + elementos[i];
+         imagenR.style.width = "77px";
+         
+         botonR.id="botonR";
+         botonR.appendChild(descripcionR);
+         botonR.appendChild(imagenR);
+         panelsuperior.appendChild(botonR);
+         
+         botonR.addEventListener("click", function() {
+            const audio = new Audio("ACTIVIDADESaudio/" + elementos[i].replace(".png", ".wav"));
+            //document.write("**5555555***JSP CONTADOR:i=" + i); 
+            audio.play();
+                });
+            });
+        }
+}
+//////////   FIN DE FUNCION 444   ///////////////
+//////////// FUNCION 555 ///////////////
+function OTROSimagen(){
+let nombreImagen = '<%= request.getAttribute("ALIMENTOimagen") %>';
+let elementos = nombreImagen.substring(1, nombreImagen.length - 1).split(", ");
+console.log(elementos);
+let panelsuperior = document.querySelector(".panelsuperior");
+let panelinferior = document.querySelector(".panelinferior");
+panelinferior.innerHTML="";
+
+   for (let i = 0; i < elementos.length; i++) {
+      let boton = document.createElement("button");
+      let descripcion = document.createElement("p");
+      let imagen = document.createElement("img");
+      descripcion.textContent = "IMAGEN" + (i + 1);
+      descripcion.style.fontSize = "0px";
+      imagen.src = "ALIMENTOimagen/" + elementos[i];
+      imagen.style.width = "77px";
+     
+      boton.id="boton";
+      boton.appendChild(descripcion);
+      boton.appendChild(imagen);
+      panelinferior.appendChild(boton);
+      
+      boton.addEventListener("click", function() {
+         let imagenCopia = imagen.cloneNode(true);
+         let botonR = document.createElement("button");
+         let descripcionR = document.createElement("p");
+         let imagenR = document.createElement("img");
+         descripcionR.textContent = "REFLE " + (i + 1);
+         descripcionR.style.fontSize = "0px";
+         imagenR.src = "ALIMENTOimagen/" + elementos[i];
+         imagenR.style.width = "77px";
+         
+         botonR.id="botonR";
+         botonR.appendChild(descripcionR);
+         botonR.appendChild(imagenR);
+         panelsuperior.appendChild(botonR);
+         
+         botonR.addEventListener("click", function() {
+            const audio = new Audio("OTROSaudio/" + elementos[i].replace(".png", ".wav"));
+            //document.write("**5555555***JSP CONTADOR:i=" + i); 
+            audio.play();
+                });
+            });
+        }
+}
+//////////   FIN DE FUNCION 555   ///////////////
+/////////// FUNCION 666 ///////////////
+function JUGUETESimagen(){
+let nombreImagen = '<%= request.getAttribute("ALIMENTOimagen") %>';
+let elementos = nombreImagen.substring(1, nombreImagen.length - 1).split(", ");
+console.log(elementos);
+let panelsuperior = document.querySelector(".panelsuperior");
+let panelinferior = document.querySelector(".panelinferior");
+panelinferior.innerHTML="";
+
+   for (let i = 0; i < elementos.length; i++) {
+      let boton = document.createElement("button");
+      let descripcion = document.createElement("p");
+      let imagen = document.createElement("img");
+      descripcion.textContent = "IMAGEN" + (i + 1);
+      descripcion.style.fontSize = "0px";
+      imagen.src = "ALIMENTOimagen/" + elementos[i];
+      imagen.style.width = "77px";
+      
+      boton.id="boton";
+      boton.appendChild(descripcion);
+      boton.appendChild(imagen);
+      panelinferior.appendChild(boton);
+      
+      boton.addEventListener("click", function() {
+         let imagenCopia = imagen.cloneNode(true);
+         let botonR = document.createElement("button");
+         let descripcionR = document.createElement("p");
+         let imagenR = document.createElement("img");
+         descripcionR.textContent = "REFLE " + (i + 1);
+         descripcionR.style.fontSize = "0px";
+         imagenR.src = "ALIMENTOimagen/" + elementos[i];
+         imagenR.style.width = "77px";
+      
+         botonR.id="botonR";
+         botonR.appendChild(descripcionR);
+         botonR.appendChild(imagenR);
+         panelsuperior.appendChild(botonR);
+         
+         botonR.addEventListener("click", function() {
+            const audio = new Audio("JUGUETESaudio/" + elementos[i].replace(".png", ".wav"));
+            //document.write("**5555555***JSP CONTADOR:i=" + i); 
+            audio.play();
+                });
+            });
+        }
+}
+//////////   FIN DE FUNCION 666   ///////////////
+/////////// FUNCION 777 ///////////////
+function FRUTASimagen(){
+let nombreImagen = '<%= request.getAttribute("ALIMENTOimagen") %>';
+let elementos = nombreImagen.substring(1, nombreImagen.length - 1).split(", ");
+console.log(elementos);
+let panelsuperior = document.querySelector(".panelsuperior");
+let panelinferior = document.querySelector(".panelinferior");
+panelinferior.innerHTML="";
+
+   for (let i = 0; i < elementos.length; i++) {
+      let boton = document.createElement("button");
+      let descripcion = document.createElement("p");
+      let imagen = document.createElement("img");
+      descripcion.textContent = "IMAGEN" + (i + 1);
+      descripcion.style.fontSize = "0px";
+      imagen.src = "ALIMENTOimagen/" + elementos[i];
+      imagen.style.width = "77px";
+      
+      boton.id="boton";
+      boton.appendChild(descripcion);
+      boton.appendChild(imagen);
+      panelinferior.appendChild(boton);
+      
+      boton.addEventListener("click", function() {
+         let imagenCopia = imagen.cloneNode(true);
+         let botonR = document.createElement("button");
+         let descripcionR = document.createElement("p");
+         let imagenR = document.createElement("img");
+         descripcionR.textContent = "REFLE " + (i + 1);
+         descripcionR.style.fontSize = "0px";
+         imagenR.src = "ALIMENTOimagen/" + elementos[i];
+         imagenR.style.width = "77px";
+         
+         botonR.id="botonR";
+         botonR.appendChild(descripcionR);
+         botonR.appendChild(imagenR);
+         panelsuperior.appendChild(botonR);
+         
+         botonR.addEventListener("click", function() {
+            const audio = new Audio("FRUTASaudio/" + elementos[i].replace(".png", ".wav"));
+            //document.write("**5555555***JSP CONTADOR:i=" + i); 
+            audio.play();
+                });
+            });
+        }
+}
+//////////   FIN DE FUNCION 777   ///////////////
+/////////// FUNCION 888 ///////////////
+function CUERPOimagen(){
+let nombreImagen = '<%= request.getAttribute("ALIMENTOimagen") %>';
+let elementos = nombreImagen.substring(1, nombreImagen.length - 1).split(", ");
+console.log(elementos);
+let panelsuperior = document.querySelector(".panelsuperior");
+let panelinferior = document.querySelector(".panelinferior");
+panelinferior.innerHTML="";
+
+   for (let i = 0; i < elementos.length; i++) {
+      let boton = document.createElement("button");
+      let descripcion = document.createElement("p");
+      let imagen = document.createElement("img");
+      descripcion.textContent = "IMAGEN" + (i + 1);
+      descripcion.style.fontSize = "0px";
+      imagen.src = "ALIMENTOimagen/" + elementos[i];
+      imagen.style.width = "77px";
+      
+      boton.id="boton";
+      boton.appendChild(descripcion);
+      boton.appendChild(imagen);
+      panelinferior.appendChild(boton);
+      
+      boton.addEventListener("click", function() {
+         let imagenCopia = imagen.cloneNode(true);
+         let botonR = document.createElement("button");
+         let descripcionR = document.createElement("p");
+         let imagenR = document.createElement("img");
+         descripcionR.textContent = "REFLE " + (i + 1);
+         descripcionR.style.fontSize = "0px";
+         imagenR.src = "ALIMENTOimagen/" + elementos[i];
+         imagenR.style.width = "77px";
+         
+         botonR.id="botonR";
+         botonR.appendChild(descripcionR);
+         botonR.appendChild(imagenR);
+         panelsuperior.appendChild(botonR);
+         
+         botonR.addEventListener("click", function() {
+            const audio = new Audio("CUERPOaudio/" + elementos[i].replace(".png", ".wav"));
+            //document.write("**5555555***JSP CONTADOR:i=" + i); 
+            audio.play();
+                });
+            });
+        }
+}
+//////////   FIN DE FUNCION 888   ///////////////
+/////////// FUNCION 999 ///////////////
+function ANIMALESimagen(){
+let nombreImagen = '<%= request.getAttribute("ALIMENTOimagen") %>';
+let elementos = nombreImagen.substring(1, nombreImagen.length - 1).split(", ");
+console.log(elementos);
+let panelsuperior = document.querySelector(".panelsuperior");
+let panelinferior = document.querySelector(".panelinferior");
+panelinferior.innerHTML="";
+
+   for (let i = 0; i < elementos.length; i++) {
+      let boton = document.createElement("button");
+      let descripcion = document.createElement("p");
+      let imagen = document.createElement("img");
+      descripcion.textContent = "IMAGEN" + (i + 1);
+      descripcion.style.fontSize = "0px";
+      imagen.src = "ALIMENTOimagen/" + elementos[i];
+      imagen.style.width = "77px";
+      
+      boton.id="boton";
+      boton.appendChild(descripcion);
+      boton.appendChild(imagen);
+      panelinferior.appendChild(boton);
+      
+      boton.addEventListener("click", function() {
+         let imagenCopia = imagen.cloneNode(true);
+         let botonR = document.createElement("button");
+         let descripcionR = document.createElement("p");
+         let imagenR = document.createElement("img");
+         descripcionR.textContent = "REFLE " + (i + 1);
+         descripcionR.style.fontSize = "0px";
+         imagenR.src = "ALIMENTOimagen/" + elementos[i];
+         imagenR.style.width = "77px";
+      
+         botonR.id="botonR";
+         botonR.appendChild(descripcionR);
+         botonR.appendChild(imagenR);
+         panelsuperior.appendChild(botonR);
+         
+         botonR.addEventListener("click", function() {
+            const audio = new Audio("ANIMALESaudio/" + elementos[i].replace(".png", ".wav"));
+            //document.write("**5555555***JSP CONTADOR:i=" + i); 
+            audio.play();
+                });
+            });
+        }
+}
+//////////   FIN DE FUNCION 999   ///////////////
+    </script>
+</body>
+</html>
+
+
+
+////////////
+888 PECS-PHP WEB LUNES 29ABRIL2024
+////////////
+<!-- index.php -->
+<!DOCTYPE html>
+
+<head>
+    <title>Mi página web</title>
+    <style>
+        .panel {
+           
+            
+            border: 2px solid black;
+            padding: 0px;
+            margin-bottom: 1px;
+            display: flex;
+            justify-content: center;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="panel" id="panel-SUPERIOR" style="overflow: auto; width: 1215px; height: 70px;">
+    </div>
+
+   <?php 
+////////////
+//MATRICIANDO LAS IMAGENES DE CARPETAS ((NO SUB PESTANAS))
+//////////// 
+////////////INICIO MATRICIAR 111 NECESIDADESimagen
+echo "<tr>";
+$NECESIDADESimagen1 = scandir('1NECESIDADESimagen/ACCION');
+$Ruta1NECESIDADESimagen=array();
+$Matriz1NECESIDADESimagen=array();
+$i=0;
+foreach ($NECESIDADESimagen1 as $imagen1NECESIDADESimagen) {
+   if ($imagen1NECESIDADESimagen != '.' && $imagen1NECESIDADESimagen != '..') {
+      $Matriz1NECESIDADESimagen[$i]=$imagen1NECESIDADESimagen;
+      $Ruta1NECESIDADESimagen[$i]='1NECESIDADESimagen/ACCION/'.$imagen1NECESIDADESimagen;
+      $Ruta1NECESIDADESaudio[$i]='1NECESIDADESaudio/ACCION/'.$imagen1NECESIDADESimagen;
+      //echo $RutaImagen[$i]; //echo $contenido[$i]; //echo $imagen;
+      $i++;
+   }
+}
+$RUTA1NECESIDADESimagenJSON=json_encode($Ruta1NECESIDADESimagen);
+$RUTA1NECESIDADESaudioJSON=json_encode($Ruta1NECESIDADESaudio);
+////////////FIN MATRICIAR 111 NECESIDADESimagen
+
+
+
+
+
+
+
+
+
+
+////////////
+//MATRICIANDO LAS IMAGENES DE CARPETAS SUBPESTAÑAS SP            
+//////////// 
+////////////////////////INICIO MATRICIAR 111 NECESIDADESimagenSUBPESTANA   
+echo "<tr>";
+   $NECESIDADESimagenSUBPESTANA1 = scandir('1NECESIDADESimagenSUBPESTANA');
+   $RUTA1NECESIDADESimagenSUBPESTANA=array();
+   $Matriz1NECESIDADESimagenSUBPESTANA=array();
+   $i=0;
+   foreach ($NECESIDADESimagenSUBPESTANA1 as $imagen) {
+      if ($imagen != '.' && $imagen != '..') {
+      $Matriz1NECESIDADESimagenSUBPESTANA[$i]=$imagen;
+      $RUTA1NECESIDADESimagenSUBPESTANA[$i]='1NECESIDADESimagenSUBPESTANA/'.$imagen;
+      //$RutaAudio[$i]='ALIMENTOaudio/'.$imagen; //echo $RutaImagen[$i]; //echo $contenido[$i];   //echo $imagen; //echo $MatrizImagenes[$i];
+      $i++;
+      }
+}
+$RUTA1NECESIDADESimagenSUBPESTANAJSON=json_encode($RUTA1NECESIDADESimagenSUBPESTANA);
+////////////////////////FIN MATRICIAR 111 NECESIDADESimagenSUBPESTANA
+?>
+    
+    
+    
+    
+    
+    
+    
+<div class="panel" id="panel-CENTRAL" style="width: 1215px; height: 150px;">
+<table> 
+<tr>
+<td style="padding: 0px;"> <img src="PECSimagen/1NECESIDADES.png" onclick="mostrar1NECESIDADESimagenACCION()" style="display: block; margin: 0; width: 257px; height:65px;"> </td>
+<td><img src="PECSimagen/2ALIMENTOS.png"    onclick="mostrar2ALIMENTOS()"   style="vertical-align:-20px; padding:2px; margin-bottom:1px; width:257px; height:65px;"></td>
+<td><img src="PECSimagen/3ESCUELA.png"      onclick="mostrar3ESCUELAimagen()"     style="vertical-align:-20px; text-align:center; padding:2px; margin-bottom:1px; width:257px; height:65px;"></td>
+<td><img src="PECSimagen/4ACTIVIDADES.png"  onclick="mostrar4ACTIVIDADESimagen()" style="vertical-align:-20px; text-align:center; padding:2px; margin-bottom:1px; width:257px; height:65px;"></td>
+<td><img src="PECSimagen/5ROPA.png"         onclick="mostrar5ROPAimagen()"       style="vertical-align:-20px; padding:2px; margin-bottom:1px; width:135px; height:62px;"></td>
+</tr>
+      
+<tr>
+<td><img src="PECSimagen/6HIGIENE.png"  onclick="mostrar6HIGIENEimagen()" style="text-align:center; text-align:left; padding:2px; margin-bottom:1px; width:257px; height:65px;"></td>
+<td><img src="PECSimagen/7CUERPO.png"   onclick="mostrar7CUERPOimagen()" style="text-align:center; padding:2px; margin-bottom:1px; width:257px; height:65px;"></td>   
+<td><img src="PECSimagen/8ANIMALES.png" onclick="mostrar8ANIMALESimagen()" style="text-align:center; padding:2px; margin-bottom:1px; width:257px; height:65px;"></td>   
+<td><img src="PECSimagen/9OTROS.png"    onclick="mostrar9OTROSimagen()" style="text-align:center; padding:2px; margin-bottom:1px; width:257px; height:65px;"></td>
+<td> <a href="AgregarEn.php"> <img src="PECSimagen/IR A AGREGAR MULTIMEDIA.png" style="text-align:center; padding:2px; margin-bottom:1px; width:135px; height:65px;"></a> </td>
+</tr>
+</table>
+</div>
+
+
+    
+    
+    
+    
+    
+<div class="panel" id="panel-CENTRALAUXILIAR" style="overflow-x: auto; width: 1215px; height: 73px;"></div>
+   
+<div class="panel" id="panel-INFERIOR" style="overflow-y: auto; width: 1215px; height: 251px;"></div>
+<div class="panel" id="panel-INFERIORAUXILIAR" style="overflow: auto; width: 1215px; height: 20px;"></div>
+
+<script>
+////////////INICIO 111 COLOCA CARPETAS NECESIDADESimagen Y NECESIDADESimagenSUBPESTANA EN PANELES
+var RUTA1NECESIDADESimagenACCION = <?php echo $RUTA1NECESIDADESimagenJSON; ?>;
+var RUTA1NECESIDADESaudioACCION = <?php echo $RUTA1NECESIDADESaudioJSON; ?>; 
+var RUTA1NECESIDADESimagenSUBPESTANA = <?php echo $RUTA1NECESIDADESimagenSUBPESTANAJSON; ?>;
+function mostrar1NECESIDADESimagenACCION(){
+
+//let PANELCENTRALAUXILIAR = document.querySelector("panel-CENTRALAUXILIAR");
+let PANELCENTRALAUXILIAR = document.getElementById("panel-CENTRALAUXILIAR");
+PANELCENTRALAUXILIAR.innerHTML=""; 
+
+//PONER IMAGENES EN PANEL CENTRAL AUXILIAR
+for(var i=0; i<RUTA1NECESIDADESimagenSUBPESTANA.length; i++){
+   //let imagen = document.createElement("img");
+   //imagen.src = "ALIMENTOimagen/" + elementos[i];
+   //panelinferior.appendChild(boton);
+   let aNECESIDADESimagenSUBPESTANAPANELCENTRALAUXILIAR = document.createElement("img");  //console.log(RI[i]);  //console.log(RISP[1]);
+   aNECESIDADESimagenSUBPESTANAPANELCENTRALAUXILIAR.src = RUTA1NECESIDADESimagenSUBPESTANA[i];
+   aNECESIDADESimagenSUBPESTANAPANELCENTRALAUXILIAR.style.width="70px"; aNECESIDADESimagenSUBPESTANAPANELCENTRALAUXILIAR.style.height="69px"; aNECESIDADESimagenSUBPESTANAPANELCENTRALAUXILIAR.style.marginRight="15px";
+   PANELCENTRALAUXILIAR.appendChild(aNECESIDADESimagenSUBPESTANAPANELCENTRALAUXILIAR);
+   
+   //INICIO PONER IMAGENES EN PANEL INFERIOR  
+   aNECESIDADESimagenSUBPESTANAPANELCENTRALAUXILIAR.addEventListener("click", function() {
+      let PANELINFERIOR=document.getElementById("panel-INFERIOR");
+      PANELINFERIOR.innerHTML=""; 
+      for(let j=0; j<RUTA1NECESIDADESimagenACCION.length; j++){
+      let aNECESIDADESimagenPANELINFERIOR = document.createElement("img");  //console.log(RUTAaNECESIDADESimagen[1]);  
+      aNECESIDADESimagenPANELINFERIOR.src =  RUTA1NECESIDADESimagenACCION[j]; //console.log(RUTA1NECESIDADESimagen[j]); 
+      aNECESIDADESimagenPANELINFERIOR.style.width="70px"; aNECESIDADESimagenPANELINFERIOR.style.height="70px"; aNECESIDADESimagenPANELINFERIOR.style.marginRight="7px";
+   PANELINFERIOR.appendChild(aNECESIDADESimagenPANELINFERIOR);
+      
+      //PONER IMAGENES EN PANEL SUPERIOR
+      aNECESIDADESimagenPANELINFERIOR.addEventListener("click", function() {    
+      //console.log(RUTA1NECESIDADESimagen[j]); 
+      let PANELSUPERIOR=document.getElementById("panel-SUPERIOR");
+      let aNECESIDADESimagenPANELSUPERIOR = document.createElement("img");//console.log(RutaImagenS);  
+      aNECESIDADESimagenPANELSUPERIOR.src = RUTA1NECESIDADESimagenACCION[j]; //console.log(RUTA1NECESIDADESimagen[1]); 
+      aNECESIDADESimagenPANELSUPERIOR.style.width="70px"; aNECESIDADESimagenPANELSUPERIOR.style.height="70px"; aNECESIDADESimagenPANELSUPERIOR.style.marginRight="7px";
+  PANELSUPERIOR.appendChild(aNECESIDADESimagenPANELSUPERIOR);
+      
+        //REPRODUCIR PANEL SUPERIOR         
+      aNECESIDADESimagenPANELSUPERIOR.addEventListener("click", function() {
+      const audio = new Audio(RUTA1NECESIDADESaudioACCION[j].replace(".png", ".wav"));
+      audio.play();
+        });  
+    });
+  }
+});
+//FIN PONER IMAGENES EN PANEL INFERIOR
+}
+}
+////////////FIN 111 COLOCA CARPETAS NECESIDADESimagen Y NECESIDADESimagenSUBPESTANA EN PANELES 
+
+    </script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+//////////////
+999 herramientas de html
+/////////////
+ table {
+      width: 1213px;
+      table-layout: fixed;
+      height:358px;
+    }
+    
+    td {
+      text-align: center;
+//CENTRA HORIZONTALMENTE IMAGEN 
+DENTRO DE CELDA DE UNA TABLA
+    }
+    
+    .imagen {
+      display: inline-block;
+      vertical-align: middle; 
+//CENTRA IMAGEN VERTICALMENTE
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////
+INICIO MATRICIAR CARPETAS
+LOS NOMBRES SON LOS ELEMENTOS
+////////////
+<?php    
+////////////INICIO MATRICIAR 111NECESIDADESimagen/ACCION
+echo "<tr>";
+$NECESIDADESimagenACCION1 = scandir('1NECESIDADESimagen/ACCION');
+$Ruta1NECESIDADESimagenACCION=array();
+$Matriz1NECESIDADESimagenACCION=array();
+$i=0;
+foreach ($NECESIDADESimagenACCION1 as $imagen1NECESIDADESimagen) {
+   if ($imagen1NECESIDADESimagen != '.' && $imagen1NECESIDADESimagen != '..') {
+      $Matriz1NECESIDADESimagenACCION[$i]=$imagen1NECESIDADESimagen;
+      $Ruta1NECESIDADESimagenACCION[$i]='1NECESIDADESimagen/ACCION/'.$imagen1NECESIDADESimagen;
+      $Ruta1NECESIDADESaudioACCION[$i]='1NECESIDADESaudio/ACCION/'.$imagen1NECESIDADESimagen;
+      //echo $RutaImagen[$i]; //echo $contenido[$i]; //echo $imagen;
+      $i++;
+   }
+}
+$RUTA1NECESIDADESimagenACCIONJSON=json_encode($Ruta1NECESIDADESimagenACCION);
+$RUTA1NECESIDADESaudioACCIONJSON=json_encode($Ruta1NECESIDADESaudioACCION);
+////////////FIN MATRICIAR 111NECESIDADESimagen/ACCION
+
+////////////INICIO MATRICIAR 111NECESIDADESimagen/EMOCION
+echo "<tr>";
+$NECESIDADESimagenEMOCION1 = scandir('1NECESIDADESimagen/EMOCION');
+$Ruta1NECESIDADESimagenEMOCION=array();
+$Matriz1NECESIDADESimagenEMOCION=array();
+$i=0;
+foreach ($NECESIDADESimagenEMOCION1 as $imagen1NECESIDADESimagen) {
+   if ($imagen1NECESIDADESimagen != '.' && $imagen1NECESIDADESimagen != '..') {
+      $Matriz1NECESIDADESimagenEMOCION[$i]=$imagen1NECESIDADESimagen;
+      $Ruta1NECESIDADESimagenEMOCION[$i]='1NECESIDADESimagen/EMOCION/'.$imagen1NECESIDADESimagen;
+      $Ruta1NECESIDADESaudioEMOCION[$i]='1NECESIDADESaudio/EMOCION/'.$imagen1NECESIDADESimagen;
+      //echo $RutaImagen[$i]; //echo $contenido[$i]; //echo $imagen;
+      $i++;
+   }
+}
+$RUTA1NECESIDADESimagenEMOCIONJSON=json_encode($Ruta1NECESIDADESimagenEMOCION);
+$RUTA1NECESIDADESaudioEMOCIONJSON=json_encode($Ruta1NECESIDADESaudioEMOCION);
+////////////FIN MATRICIAR 111NECESIDADESimage/EMOCION
+
+////////////INICIO MATRICIAR 111NECESIDADESimagen/GESTOS
+echo "<tr>";
+$NECESIDADESimagenGESTOS1 = scandir('1NECESIDADESimagen/GESTOS');
+$Ruta1NECESIDADESimagenGESTOS=array();
+$Matriz1NECESIDADESimagenGESTOS=array();
+$i=0;
+foreach ($NECESIDADESimagenGESTOS1 as $imagen1NECESIDADESimagen) {
+   if ($imagen1NECESIDADESimagen != '.' && $imagen1NECESIDADESimagen != '..') {
+      $Matriz1NECESIDADESimagenGESTOS[$i]=$imagen1NECESIDADESimagen;
+      $Ruta1NECESIDADESimagenGESTOS[$i]='1NECESIDADESimagen/GESTOS/'.$imagen1NECESIDADESimagen;
+      $Ruta1NECESIDADESaudioGESTOS[$i]='1NECESIDADESaudio/GESTOS/'.$imagen1NECESIDADESimagen;
+      //echo $RutaImagen[$i]; //echo $contenido[$i]; //echo $imagen;
+      $i++;
+   }
+}
+$RUTA1NECESIDADESimagenGESTOSJSON=json_encode($Ruta1NECESIDADESimagenGESTOS);
+$RUTA1NECESIDADESaudioGESTOSJSON=json_encode($Ruta1NECESIDADESaudioGESTOS);
+////////////FIN MATRICIAR 111NECESIDADESimagen/GESTOS
+?>
+
+
+////////////
+FIN MATRICIAR CARPETAS
+LOS NOMBRES SON LOS ELEMENTOS
+////////////
+
+
+
+
+
+
+
+////////////
+INICIO CARGAR IMAGENES  CON PHP EN UN PANEL
+////////////
+<div class="panelinferior">
+<?php
+//CARGAR AL PANEL LAS IMAGENES DE LA MATRIZ CARPETA ALIMENTO
+foreach($RutaALIMENTOimagen as $ruta)
+{//echo '<img src="'.$ruta.'" width="77" height="77" alt="ima">';
+   echo '<a href="?imagenn_clicked='.$ruta.'"> <img src="'.$ruta.'" width="77" height="77" alt="ima"> </a>';
+} 
+?> 
+
+</div>
+////////////
+FIN DE CARGAR IMAGENES CON PHP EN UN PANEL
+////////////
